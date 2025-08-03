@@ -1,12 +1,22 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
-import { byteSize, duration, enumerated, integer, number, ports } from '../../src/config.parsers.mjs'
+import { boolean, byteSize, duration, enumerated, integer, number, ports } from '../../src/config.parsers.mjs'
 
 function Case(name, input, expected) {
   return { name, input, expected }
 }
 
 const cases = {
+  boolean: {
+    method: value => boolean(value),
+    cases: [
+      Case('should parse true', 'true', true),
+      Case('should parse false', 'false', false),
+      Case('should parse any word', 'foo', false),
+      Case('should return undefined on undefined', undefined, undefined)
+    ]
+  },
+
   integer: {
     method: value => integer(value),
     cases: [

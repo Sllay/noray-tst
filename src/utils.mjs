@@ -1,3 +1,6 @@
+import { randomInt } from 'node:crypto'
+import words from './wordlist.mjs'
+
 /**
 * Return current time ( seconds since epoch ).
 * @returns {number}
@@ -200,4 +203,17 @@ export function formatDuration (seconds) {
   const [unit, multiplier] = units.find(([_, f]) => seconds > f) ?? units.at(-1)
 
   return (seconds / multiplier) + unit
+}
+
+/**
+* Select random words from wordlist.
+*
+* Used to generate a word based OID For example, FalconTimberYolk
+* @param {integer} Word count
+* @returns {string} Concatenated words
+*/
+export function generateWordId (wordCount = 3) {
+  return range(wordCount)
+    .map(() => words[randomInt(words.length)])
+    .join('')
 }

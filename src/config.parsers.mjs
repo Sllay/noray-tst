@@ -1,6 +1,17 @@
 import assert from 'node:assert'
 
 /**
+  * Parse config value as boolean.
+  * @param {any} value Value
+  * @returns {boolean?} Boolean or undefined
+  */
+export function boolean (value) {
+  return value !== undefined
+    ? value === 'true'
+    : undefined
+}
+
+/**
   * Parse config value as integer.
   *
   * @param {any} value Value
