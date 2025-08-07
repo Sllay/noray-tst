@@ -1,20 +1,16 @@
-FROM node:18-alpine
-# From https://github.com/pnpm/pnpm/issues/4837
-
+FROM node:20-alpine
 # UDP host for remote address registration
 EXPOSE 8809/udp
 # TCP host for commands
 EXPOSE 8890/tcp
 # HTTP host for Prometheus metrics
 EXPOSE 8891/tcp
-
-# Relay UDP ports (reduzido para 3 portas dentro do intervalo necessário)
+# Relay UDP ports (reduzido para evitar limite de portas)
 EXPOSE 49152/udp
 EXPOSE 49153/udp
 EXPOSE 49154/udp
 
 COPY . noray
-
 WORKDIR noray
 
 RUN npm install -g npm@latest && \
