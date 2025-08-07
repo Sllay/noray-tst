@@ -10,8 +10,7 @@ EXPOSE 8891/tcp
 COPY . noray
 WORKDIR noray
 
-RUN npm install -g pnpm && \
-    pnpm setup && \
-    pnpm install
+# Instala dependências via npm (ignora qualquer engine check pendente no pnpm)
+RUN npm install --legacy-peer-deps
 
-CMD ["pnpm", "start:prod"]
+CMD ["npm", "run", "start:prod"]
