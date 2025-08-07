@@ -8,20 +8,23 @@ EXPOSE 8890/tcp
 # HTTP host for Prometheus metrics
 EXPOSE 8891/tcp
 
+# Relay UDP ports (reduzido para 3 portas dentro do intervalo necessário)
+EXPOSE 49152/udp
+EXPOSE 49153/udp
+EXPOSE 49154/udp
+
 COPY . noray
 
 WORKDIR noray
 
-RUN npm i -g npm@latest; \
- # Install pnpm
- npm install -g pnpm; \
- pnpm --version; \
- pnpm setup; \
- mkdir -p /usr/local/share/pnpm &&\
- export PNPM_HOME="/usr/local/share/pnpm" &&\
- export PATH="$PNPM_HOME:$PATH"; \
- pnpm bin -g && \
- # Install dependencies
- pnpm install
+RUN npm install -g npm@latest && \
+    npm install -g pnpm && \
+    pnpm --version && \
+    pnpm setup && \
+    mkdir -p /usr/local/share/pnpm && \
+    export PNPM_HOME="/usr/local/share/pnpm" && \
+    export PATH="$PNPM_HOME:$PATH" && \
+    pnpm bin -g && \
+    pnpm install
 
-CMD pnpm start:prod
+CMD ["pnpm", "start:prod"]
